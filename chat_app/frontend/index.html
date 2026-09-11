@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local LLM Chat</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+  <div class="app">
+    <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <button id="new-chat-btn" class="new-chat-btn">+ New chat</button>
+      </div>
+      <div id="chat-list" class="chat-list"></div>
+      <div class="sidebar-footer">
+        <button id="theme-toggle" class="theme-toggle-btn">
+          <span id="theme-toggle-label">Light mode</span>
+        </button>
+        <button id="stream-toggle" class="theme-toggle-btn">
+          <span id="stream-toggle-label">Streaming: On</span>
+        </button>
+      </div>
+    </aside>
+
+    <div id="overlay" class="overlay"></div>
+
+    <main class="main">
+      <div id="chat-title" class="chat-title-header"></div>
+      <div id="messages" class="messages"></div>
+
+      <div class="input-bar">
+        <textarea id="message-input" class="message-input" placeholder="Message the model..." rows="1"></textarea>
+        <button id="send-btn" class="send-btn" aria-label="Send message">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M2 21l21-9L2 3v7l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

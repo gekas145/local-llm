@@ -1,0 +1,32 @@
+services:
+  llm:
+    build: ./llm_service
+    ports:
+      - "8080:8080"
+    volumes:
+      # Put the unquantized HF checkpoint at ./llm_service/models/<model_name> on the host.
+      # The quantized GGUF is written back into ./llm_service/models, so it survives container
+      # restarts and the convert+quantize step only runs the first time.
+      - ./llm_service/models:/models
+    environment:
+      - model_name=gemma-3-1b-it-qat-q4_0-unquantized
+      - quantize=true
+      - quant_type=Q4_0
+      # - ctx_size=2048
+
+  backend:
+    build: ./chat_app/backend
+    ports:
+      - "${backend_port:-8000}:8000"
+    volumes:
+      # Named volume: lives on the Docker VM's native filesystem, which SQLite
+      # needs for reliable locking (bind mounts on Windows are flaky for this).
+      - dbdata:/data
+    environment:
+      - LLM_URL=http://llm:8080
+      - DB_PATH=/data/app.db
+    depends_on:
+      - llm
+
+volumes:
+  dbdata:
